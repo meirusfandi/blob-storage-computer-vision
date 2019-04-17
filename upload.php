@@ -107,7 +107,7 @@
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($nama, "r") or die("Unable to upload file");
+                                    $upload = fopen($nama, "w") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
@@ -131,13 +131,7 @@
                                     echo "<br/>";
                                     echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
                                     echo "<br/>";
-                                    echo '<img src="files/'.$nama.'" width="200" height="200"/>'; ?>
-
-                                    <img src=<?php echo $urlImage; ?> width="200" height="200"/>
-                                    
-                                    <?php 
-                                    
-                                    // $urlImage = "http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg";
+                                    echo '<img src="'.$urlImage.'" width="200" height="200"/>';
 
                                     do{
                                         $result = $blob_client->listBlobs($container_name, $bloblists);
