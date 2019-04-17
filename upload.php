@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8" />
     <title>Blob Storage Computer Vision | Submission Azure Cloud Academy</title>
     <link rel="stylesheet" type="text/css" href="css/app.css"/>
     <script type="text/javascript" src="jquery.min.js"></script>
