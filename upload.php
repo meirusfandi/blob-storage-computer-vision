@@ -90,7 +90,7 @@
                     //create container name
                     $container_name = "submission".generateRandomString();
 
-                    if (isset($_POST['upload'])){
+                    if (($_POST['upload'])){
                         $ekstensi_diperbolehkan	= array('png','jpg', 'JPG', 'jpeg');
                         $nama = $_FILES['image']['name'];
                         $x = explode('.', $nama);
