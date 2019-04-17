@@ -88,7 +88,7 @@
                     $create_container_options->addMetaData("key2", "value2");
 
                     //create container name
-                    $container_name = "fansdev".generateRandomString();
+                    $container_name = "submission".generateRandomString();
 
                     if (isset($_POST['upload'])){
                         $ekstensi_diperbolehkan	= array('png','jpg', 'JPG', 'jpeg');
