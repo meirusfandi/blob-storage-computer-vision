@@ -98,6 +98,8 @@
                         $ekstensi = strtolower(end($x));
                         $ukuran	= $_FILES['image']['size'];
                         $file_tmp = $_FILES['image']['tmp_name'];
+
+                        $filename = $nama;
                         
                         if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
@@ -107,17 +109,17 @@
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($nama, "r") or die("Unable to upload file");
+                                    $upload = fopen($filename, "r") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
                                     echo "Uploading BlockBlob: ".PHP_EOL;
-                                    echo $nama;
+                                    echo $filename;
                                     echo "<br />";
-                                    $content = fopen($nama, "r");
+                                    $content = fopen($filename, "r");
 
                                     //upload to container and blob
-                                    $blob_client->createBlockBlob($container_name, $nama, $content);
+                                    $blob_client->createBlockBlob($container_name, $filename, $content);
 
                                     echo "Upload File Successfully!!!<br/>";
 
@@ -125,11 +127,11 @@
                                     $bloblists = new ListBlobsOptions();
                                     $bloblists->setPrefix("Final Submission");
 
-                                    $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$nama;
+                                    $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
 
                                     echo "These image from upload: ";
                                     echo "<br/>";
-                                    echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$nama;
+                                    echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
                                     echo "<br/>";
                                     echo '<img src="'.$urlImage.'" width="200" height="200"/>';
 
@@ -138,7 +140,7 @@
                                         foreach ($result->getBlobs() as $blob)
                                         {
 
-                                            echo '<img src="files/'.$nama.'" width="120" height="120"/>';
+                                            echo '<img src="files/'.$filename.'" width="120" height="120"/>';
                                     
                                         }
                                         $bloblists->setContinuationToken($result->getContinuationToken());
@@ -153,6 +155,7 @@
                                     <?php 
                                     $blob = $blob_client->getBlob($container_name, $filename);
                                     fpassthru($blob->getContentStream());
+                                    
                                 } catch(ServiceException $e){
                                     // Handle exception based on error codes and messages.
                                     // Error codes and messages are here:
