@@ -79,7 +79,7 @@
                     $connect_string = "DefaultEndpointsProtocol=https;AccountName=fansdev;AccountKey=QFChV4ExeYoe/GCcpbnAagmKnFOvW8y7Lu3dwjyhhnrk/u38o9rLyjoFNXtMLPAO4dKDayHl+nxQPn+jtwKpow==;";
 
                     //create blob client service
-                    $blob_client = BlobRestProxy::createBlobService($connect_string);
+                    $blob_client = BlobRestProxy::getInstance()->createBlobService($connect_string);
 
                     $create_container_options = new CreateContainerOptions();
                     $create_container_options->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
