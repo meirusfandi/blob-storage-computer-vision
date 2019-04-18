@@ -120,7 +120,7 @@
                                     $content = fopen($name, "r");
 
                                     //upload to container and blob
-                                    $blob_client->createBlockBlob($container_name, $name, $upload);
+                                    $blob_client->createBlockBlob($container_name, $name, $content);
 
                                     echo "Upload File Successfully!!!<br/>";
 
