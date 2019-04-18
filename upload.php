@@ -68,7 +68,7 @@
                 <?php 
                     require_once 'vendor/autoload.php';
                     require_once "./random_string.php";
-
+                    // use WindowsAzure\Common\ServicesBuilder;
                     use MicrosoftAzure\Storage\Blob\BlobRestProxy;
                     use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
                     use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
@@ -80,6 +80,7 @@
 
                     //create blob client service
                     $blob_client = BlobRestProxy::createBlobService($connect_string);
+                    // $blob_client = ServiceBuilder::getInstance()->createBlobService($connect_string);
 
                     $create_container_options = new CreateContainerOptions();
                     $create_container_options->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
@@ -90,6 +91,8 @@
 
                     //create container name
                     $container_name = "final".generateRandomString();
+
+                    $filename = $_FILES['image']['name'];
 
                     if (($_POST['upload'])){
                         $ekstensi_diperbolehkan	= array('png','jpg', 'JPG', 'jpeg');
@@ -103,24 +106,24 @@
                         
                         if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
-                                move_uploaded_file($file_tmp, 'files/'.$nama);
+                                move_uploaded_file($nama, 'files/'.$nama);
                                 
                                 try {
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($file_tmp, "r") or die("Unable to upload file");
+                                    $upload = fopen($nama, "w") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
                                     echo "Uploading BlockBlob: ".PHP_EOL;
-                                    echo $nama;
+                                    echo $filename;
                                     echo "<br />";
 
-                                    $content = fopen($nama, "r");
+                                    $content = fopen($filename, "r");
 
                                     //upload to container and blob
-                                    $blob_client->createBlockBlob($container_name, $nama, $content);
+                                    $blob_client->createBlockBlob($container_name, $filename, $content);
 
                                     echo "Upload File Successfully!!!<br/>";
 
