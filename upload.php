@@ -110,7 +110,7 @@
                                     $blob_client->createContainer($container_name, $create_container_options);
 
                                     $upload = fopen($filename, "w") or die("Unable to upload file");
-                                    fclose($upload);
+                                    // fclose($upload);
 
                                     # Mengunggah file sebagai block blob
                                     echo "Uploading BlockBlob: ".PHP_EOL;
