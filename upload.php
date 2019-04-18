@@ -76,7 +76,7 @@
                     use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 
                     // $connect_string = "DefaultEndpointsProtocol=https;AccountName=".getenv("ACCOUNT_NAME").";AccountKey=".getenv("ACCOUNT_KEY").";EndpointSuffix=core.windows.net";
-                    $connect_string = "DefaultEndpointsProtocol=https;AccountName=fansdev;AccountKey=QFChV4ExeYoe/GCcpbnAagmKnFOvW8y7Lu3dwjyhhnrk/u38o9rLyjoFNXtMLPAO4dKDayHl+nxQPn+jtwKpow==;EndpointSuffix=core.windows.net";
+                    $connect_string = "DefaultEndpointsProtocol=https;AccountName=fansdev;AccountKey=QFChV4ExeYoe/GCcpbnAagmKnFOvW8y7Lu3dwjyhhnrk/u38o9rLyjoFNXtMLPAO4dKDayHl+nxQPn+jtwKpow==;";
 
                     //create blob client service
                     $blob_client = BlobRestProxy::createBlobService($connect_string);
@@ -89,7 +89,7 @@
                     $create_container_options->addMetaData("key2", "value2");
 
                     //create container name
-                    $container_name = "submission".generateRandomString();
+                    $container_name = "final_".generateRandomString();
 
                     if (($_POST['upload'])){
                         $ekstensi_diperbolehkan	= array('png','jpg', 'JPG', 'jpeg');
@@ -99,7 +99,7 @@
                         $ukuran	= $_FILES['image']['size'];
                         $file_tmp = $_FILES['image']['tmp_name'];
 
-                        $filename = $nama;
+                        // $filename = $nama;
                         
                         if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
@@ -109,24 +109,24 @@
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($filename, "r") or die("Unable to upload file");
+                                    $upload = fopen($nama, "r") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
                                     echo "Uploading BlockBlob: ".PHP_EOL;
-                                    echo $filename;
+                                    echo $nama;
                                     echo "<br />";
-                                    $name = $_FILES['image']['name'];
-                                    $content = fopen($name, "r");
+
+                                    $content = fopen($nama, "r");
 
                                     //upload to container and blob
-                                    $blob_client->createBlockBlob($container_name, $name, $content);
+                                    $blob_client->createBlockBlob($container_name, $nama, $content);
 
                                     echo "Upload File Successfully!!!<br/>";
 
                                     // get list blobs
                                     $bloblists = new ListBlobsOptions();
-                                    $bloblists->setPrefix("Final Submission");
+                                    $bloblists->setPrefix("FinalSubmission");
 
                                     $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$name;
 
@@ -141,12 +141,12 @@
                                         foreach ($result->getBlobs() as $blob)
                                         {
 
-                                            echo '<img src="files/'.$name.'" width="120" height="120"/>';
+                                            echo '<img src="'.$blob->getUrl().'" width="200" height="200"/>';
                                     
                                         }
                                         $bloblists->setContinuationToken($result->getContinuationToken());
                                     } while($result->getContinuationToken());
-
+                                    echo "<br/>";
                                     ?>
 
                                     <input type="text" name="inputImage" id="inputImage" width="200"
@@ -154,21 +154,16 @@
                                     <button onclick="processImage()">Analyze image</button>
                                     
                                     <?php 
+                                    echo "This is the content of the blob uploaded: <br/>";
                                     $blob = $blob_client->getBlob($container_name, $name);
                                     fpassthru($blob->getContentStream());
                                     
                                 } catch(ServiceException $e){
-                                    // Handle exception based on error codes and messages.
-                                    // Error codes and messages are here:
-                                    // http://msdn.microsoft.com/library/azure/dd179439.aspx
                                     $code = $e->getCode();
                                     $error_message = $e->getMessage();
                                     echo $code.": ".$error_message."<br />";
                                 }
                                 catch(InvalidArgumentTypeException $e){
-                                    // Handle exception based on error codes and messages.
-                                    // Error codes and messages are here:
-                                    // http://msdn.microsoft.com/library/azure/dd179439.aspx
                                     $code = $e->getCode();
                                     $error_message = $e->getMessage();
                                     echo $code.": ".$error_message."<br />";
