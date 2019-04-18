@@ -68,8 +68,8 @@
                 <?php 
                     require_once 'vendor/autoload.php';
                     require_once "./random_string.php";
-
-                    use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+                    use WindowsAzure\Common\ServicesBuilder;
+                    // use MicrosoftAzure\Storage\Blob\BlobRestProxy;
                     use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
                     use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
                     use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
@@ -79,7 +79,8 @@
                     $connect_string = "DefaultEndpointsProtocol=https;AccountName=fansdev;AccountKey=QFChV4ExeYoe/GCcpbnAagmKnFOvW8y7Lu3dwjyhhnrk/u38o9rLyjoFNXtMLPAO4dKDayHl+nxQPn+jtwKpow==;";
 
                     //create blob client service
-                    $blob_client = BlobRestProxy::getInstance()->createBlobService($connect_string);
+                    // $blob_client = BlobRestProxy::getInstance()->createBlobService($connect_string);
+                    $blob_client = ServiceBuilder::getInstance()->createBlobService($connect_string);
 
                     $create_container_options = new CreateContainerOptions();
                     $create_container_options->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
