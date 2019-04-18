@@ -110,16 +110,17 @@
                                     $blob_client->createContainer($container_name, $create_container_options);
 
                                     $upload = fopen($filename, "w") or die("Unable to upload file");
-                                    // fclose($upload);
+                                    fclose($upload);
 
                                     # Mengunggah file sebagai block blob
                                     echo "Uploading BlockBlob: ".PHP_EOL;
                                     echo $filename;
                                     echo "<br />";
-                                    // $content = fopen($filename, "r");
+                                    $name = $_FILES['image']['name'];
+                                    $content = fopen($name, "r");
 
                                     //upload to container and blob
-                                    $blob_client->createBlockBlob($container_name, $filename, $upload);
+                                    $blob_client->createBlockBlob($container_name, $name, $upload);
 
                                     echo "Upload File Successfully!!!<br/>";
 
@@ -127,11 +128,11 @@
                                     $bloblists = new ListBlobsOptions();
                                     $bloblists->setPrefix("Final Submission");
 
-                                    $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
+                                    $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$name;
 
                                     echo "These image from upload: ";
                                     echo "<br/>";
-                                    echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
+                                    echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$name;
                                     echo "<br/>";
                                     echo '<img src="'.$urlImage.'" width="200" height="200"/>';
 
@@ -140,7 +141,7 @@
                                         foreach ($result->getBlobs() as $blob)
                                         {
 
-                                            echo '<img src="files/'.$filename.'" width="120" height="120"/>';
+                                            echo '<img src="files/'.$name.'" width="120" height="120"/>';
                                     
                                         }
                                         $bloblists->setContinuationToken($result->getContinuationToken());
@@ -153,7 +154,7 @@
                                     <button onclick="processImage()">Analyze image</button>
                                     
                                     <?php 
-                                    $blob = $blob_client->getBlob($container_name, $filename);
+                                    $blob = $blob_client->getBlob($container_name, $name);
                                     fpassthru($blob->getContentStream());
                                     
                                 } catch(ServiceException $e){
