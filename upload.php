@@ -98,7 +98,6 @@
                         $ekstensi = strtolower(end($x));
                         $ukuran	= $_FILES['image']['size'];
                         $file_tmp = $_FILES['image']['tmp_name'];
-                        $filename = $nama;
                         
                         if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
@@ -108,17 +107,17 @@
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($nama, "w") or die("Unable to upload file");
+                                    $upload = fopen($nama, "r") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
                                     echo "Uploading BlockBlob: ".PHP_EOL;
-                                    echo $filename;
+                                    echo $nama;
                                     echo "<br />";
-                                    $content = fopen($filename, "r");
+                                    $content = fopen($nama, "r");
 
                                     //upload to container and blob
-                                    $blob_client->createBlockBlob($container_name, $filename, $content);
+                                    $blob_client->createBlockBlob($container_name, $nama, $content);
 
                                     echo "Upload File Successfully!!!<br/>";
 
@@ -126,7 +125,7 @@
                                     $bloblists = new ListBlobsOptions();
                                     $bloblists->setPrefix("Final Submission");
 
-                                    $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
+                                    $urlImage = "https://fansdev.blob.core.windows.net/".$container_name."/".$nama;
 
                                     echo "These image from upload: ";
                                     echo "<br/>";
