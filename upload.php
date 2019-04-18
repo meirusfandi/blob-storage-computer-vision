@@ -101,7 +101,7 @@
                         
                         if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
-                                // move_uploaded_file($file_tmp, 'files/'.$nama);
+                                move_uploaded_file($file_tmp, 'files/'.$nama);
                                 
                                 try {
                                     //container create
@@ -144,11 +144,15 @@
                                         $bloblists->setContinuationToken($result->getContinuationToken());
                                     } while($result->getContinuationToken());
 
+                                    ?>
+
+                                    <input type="text" name="inputImage" id="inputImage" width="200"
+                                        value="<?php echo  $urlImage;?>" />
+                                    <button onclick="processImage()">Analyze image</button>
+                                    
+                                    <?php 
                                     $blob = $blob_client->getBlob($container_name, $filename);
                                     fpassthru($blob->getContentStream());
-
-                                    
-                                    
                                 } catch(ServiceException $e){
                                     // Handle exception based on error codes and messages.
                                     // Error codes and messages are here:
