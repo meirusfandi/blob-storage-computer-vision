@@ -147,13 +147,7 @@
                                     $blob = $blob_client->getBlob($container_name, $filename);
                                     fpassthru($blob->getContentStream());
 
-                                    ?>
-
-                                    <input type="text" name="inputImage" id="inputImage" width="200"
-                                        value="<?php echo  $urlImage;?>" />
-                                    <button onclick="processImage()">Analyze image</button>
                                     
-                                    <?php 
                                     
                                 } catch(ServiceException $e){
                                     // Handle exception based on error codes and messages.
