@@ -89,7 +89,7 @@
                     $create_container_options->addMetaData("key2", "value2");
 
                     //create container name
-                    $container_name = "final_".generateRandomString();
+                    $container_name = "final".generateRandomString();
 
                     if (($_POST['upload'])){
                         $ekstensi_diperbolehkan	= array('png','jpg', 'JPG', 'jpeg');
