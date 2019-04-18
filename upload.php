@@ -144,6 +144,9 @@
                                         $bloblists->setContinuationToken($result->getContinuationToken());
                                     } while($result->getContinuationToken());
 
+                                    $blob = $blob_client->getBlob($container_name, $filename);
+                                    fpassthru($blob->getContentStream());
+
                                     ?>
 
                                     <input type="text" name="inputImage" id="inputImage" width="200"
@@ -151,8 +154,7 @@
                                     <button onclick="processImage()">Analyze image</button>
                                     
                                     <?php 
-                                    $blob = $blob_client->getBlob($container_name, $filename);
-                                    fpassthru($blob->getContentStream());
+                                    
                                 } catch(ServiceException $e){
                                     // Handle exception based on error codes and messages.
                                     // Error codes and messages are here:
