@@ -101,13 +101,13 @@
                         
                         if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
                             if($ukuran < 1044070){			
-                                move_uploaded_file($file_tmp, 'files/'.$nama);
+                                // move_uploaded_file($file_tmp, 'files/'.$nama);
                                 
                                 try {
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($nama, "r") or die("Unable to upload file");
+                                    $upload = fopen($nama, "w") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
