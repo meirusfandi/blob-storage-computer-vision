@@ -129,7 +129,7 @@
 
                                     echo "These image from upload: ";
                                     echo "<br/>";
-                                    echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$filename;
+                                    echo "The url image is : https://fansdev.blob.core.windows.net/".$container_name."/".$nama;
                                     echo "<br/>";
                                     echo '<img src="'.$urlImage.'" width="200" height="200"/>';
 
