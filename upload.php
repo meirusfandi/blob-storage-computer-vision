@@ -109,7 +109,7 @@
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($nama, "w") or die("Unable to upload file");
+                                    $upload = fopen($nama, "r") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
@@ -146,7 +146,7 @@
                                         }
                                         $bloblists->setContinuationToken($result->getContinuationToken());
                                     } while($result->getContinuationToken());
-                                    echo "<br/>";
+                                    
                                     ?>
 
                                     <input type="text" name="inputImage" id="inputImage" width="200"
@@ -154,7 +154,6 @@
                                     <button onclick="processImage()">Analyze image</button>
                                     
                                     <?php 
-                                    echo "This is the content of the blob uploaded: <br/>";
                                     $blob = $blob_client->getBlob($container_name, $name);
                                     fpassthru($blob->getContentStream());
                                     
