@@ -112,7 +112,7 @@
                                     //container create
                                     $blob_client->createContainer($container_name, $create_container_options);
 
-                                    $upload = fopen($nama, "w") or die("Unable to upload file");
+                                    $upload = fopen($file_tmp, "r") or die("Unable to upload file");
                                     fclose($upload);
 
                                     # Mengunggah file sebagai block blob
