@@ -120,7 +120,7 @@
                                     echo $filename;
                                     echo "<br />";
 
-                                    $content = fopen($filename, "r");
+                                    $content = fopen($file_tmp, "r");
 
                                     //upload to container and blob
                                     $blob_client->createBlockBlob($container_name, $filename, $content);
